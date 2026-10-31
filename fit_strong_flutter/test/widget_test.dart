@@ -4,8 +4,8 @@ import 'package:fit_strong/main.dart';
 
 void main() {
   testWidgets('home dashboard renders', (tester) async {
-    await tester.view.setPhysicalSize(const Size(390, 844));
-    await tester.view.setDevicePixelRatio(1);
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -17,8 +17,8 @@ void main() {
   });
 
   testWidgets('bottom navigation opens workouts and progress', (tester) async {
-    await tester.view.setPhysicalSize(const Size(390, 844));
-    await tester.view.setDevicePixelRatio(1);
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -35,8 +35,8 @@ void main() {
   });
 
   testWidgets('workout category filter narrows the list', (tester) async {
-    await tester.view.setPhysicalSize(const Size(390, 844));
-    await tester.view.setDevicePixelRatio(1);
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -51,8 +51,8 @@ void main() {
   });
 
   testWidgets('a workout can be started and completed', (tester) async {
-    await tester.view.setPhysicalSize(const Size(390, 844));
-    await tester.view.setDevicePixelRatio(1);
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
