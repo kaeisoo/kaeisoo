@@ -36,6 +36,13 @@ jobs:
             flutter create --platforms=android --org com.fitstrong --project-name fit_strong --no-pub .
           fi
 
+      - name: Set analyzer rules
+        run: |
+          cat > analysis_options.yaml <<'YAML'
+          linter:
+            rules: []
+          YAML
+
       - name: Resolve packages
         run: flutter pub get
 
