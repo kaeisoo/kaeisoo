@@ -1,0 +1,4 @@
+# Keep CI focused on compile-time/analyzer errors. App-specific lint rules can
+# be enabled incrementally once the project is running on the target SDK.
+linter:
+  rules: []
