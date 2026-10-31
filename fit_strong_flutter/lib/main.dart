@@ -113,9 +113,33 @@ class DashboardPage extends StatelessWidget {
           ]),
         ])),
         const SizedBox(height: 22),
-        Row(children: [const Text("Today's Progress", style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15)), const Spacer(), TextButton(onPressed: onProgress, child: const Text('View activity', style: TextStyle(color: lime))) ]),
+        Row(children: [
+          const Expanded(child: Text("Today's Progress", style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15))),
+          TextButton(
+            onPressed: onProgress,
+            style: TextButton.styleFrom(
+              foregroundColor: lime,
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              visualDensity: VisualDensity.compact,
+            ),
+            child: const Text('View activity'),
+          ),
+        ]),
         Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: card, borderRadius: BorderRadius.circular(22)), child: Column(children: [
-          Row(children: [const Text('Daily goal', style: TextStyle(fontWeight: FontWeight.w700)), const Spacer(), Text(completed.toString() + ' workouts this week', style: const TextStyle(color: muted, fontSize: 10))]),
+          Row(children: [
+            const Expanded(child: Text('Daily goal', style: TextStyle(fontWeight: FontWeight.w700))),
+            Flexible(
+              child: Text(
+                completed.toString() + ' workouts this week',
+                textAlign: TextAlign.end,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: muted, fontSize: 10),
+              ),
+            ),
+          ]),
           const SizedBox(height: 14), SizedBox(height: 125, child: Stack(alignment: Alignment.center, children: [
             CustomPaint(size: const Size(210, 118), painter: GaugePainter(.68)),
             const Positioned(bottom: 5, child: Column(children: [Text('68%', style: TextStyle(fontSize: 29, fontWeight: FontWeight.w900)), Text('Completed', style: TextStyle(color: muted, fontSize: 10))])),
