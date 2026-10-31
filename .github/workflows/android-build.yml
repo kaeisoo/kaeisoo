@@ -1,0 +1,75 @@
+name: Fit & Strong Android CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'fit_strong_flutter/**'
+      - '.github/workflows/android-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: fit_strong_flutter
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter stable
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Generate Android project files
+        run: |
+          if [ ! -d android ]; then
+            flutter create --platforms=android --org com.fitstrong --project-name fit_strong --no-pub .
+          fi
+
+      - name: Resolve packages
+        run: flutter pub get
+
+      - name: Analyze Dart code
+        run: flutter analyze
+
+      - name: Run widget tests
+        run: flutter test --reporter expanded
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Package full source
+        working-directory: .
+        run: |
+          zip -qr fit_strong_source.zip fit_strong_flutter             -x 'fit_strong_flutter/.dart_tool/*'                'fit_strong_flutter/build/*'                'fit_strong_flutter/.git/*'
+
+      - name: Save generated Android runner files
+        working-directory: .
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fit_strong_flutter/android fit_strong_flutter/.metadata fit_strong_flutter/pubspec.lock
+          if ! git diff --cached --quiet; then
+            git commit -m "Add generated Android project files"
+            git push
+          fi
+
+      - name: Upload APK and source archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: fit-strong-android-release
+          path: |
+            fit_strong_flutter/build/app/outputs/flutter-apk/app-release.apk
+            fit_strong_source.zip
+          if-no-files-found: error
+          retention-days: 30
