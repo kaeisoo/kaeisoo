@@ -172,7 +172,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
         const SizedBox(height: 18), Wrap(spacing: 7, children: categories.map((c) => ChoiceChip(label: Text(c), selected: filter == c, onSelected: (_) => setState(() => filter = c), selectedColor: lime, backgroundColor: card, side: BorderSide.none, showCheckmark: false, labelStyle: TextStyle(color: filter == c ? Colors.black : Colors.white70, fontSize: 11))).toList()),
         const SizedBox(height: 17),
         Container(padding: const EdgeInsets.all(17), decoration: BoxDecoration(color: lime, borderRadius: BorderRadius.circular(22)), child: Row(children: [
-          const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('FEATURED PLAN', style: TextStyle(color: Colors.black54, fontSize: 9, fontWeight: FontWeight.w900)), SizedBox(height: 7), Text('Upper Body\nStrength', style: TextStyle(color: Colors.black, fontSize: 22, height: 1.05, fontWeight: FontWeight.w900)), SizedBox(height: 7), Text('5 exercises  •  45 min', style: TextStyle(color: Colors.black87, fontSize: 10))]),
+          const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('FEATURED PLAN', style: TextStyle(color: Colors.black54, fontSize: 9, fontWeight: FontWeight.w900)), SizedBox(height: 7), Text('Upper Body\nStrength', style: TextStyle(color: Colors.black, fontSize: 22, height: 1.05, fontWeight: FontWeight.w900)), SizedBox(height: 7), Text('5 exercises  •  45 min', style: TextStyle(color: Colors.black87, fontSize: 10))])),
           const Icon(Icons.fitness_center, color: Color(0xFF334000), size: 65),
         ])),
         const SizedBox(height: 18), SizedBox(width: double.infinity, child: FilledButton(onPressed: () => widget.onStart(names[0], durations[0]), style: FilledButton.styleFrom(backgroundColor: lime, foregroundColor: Colors.black), child: const Text('Start featured workout'))),
@@ -201,9 +201,35 @@ class ActivityPage extends StatelessWidget {
     return SafeArea(child: ListView(padding: const EdgeInsets.all(20), children: [
       const Header(), const SizedBox(height: 24), const Text('Your activity', style: TextStyle(fontSize: 27, fontWeight: FontWeight.w900)),
       const SizedBox(height: 5), const Text('Every move brings you closer.', style: TextStyle(color: muted, fontSize: 12)), const SizedBox(height: 20),
-      Container(padding: const EdgeInsets.all(4), decoration: BoxDecoration(color: card, borderRadius: BorderRadius.circular(30)), child: Row(children: ['Day', 'Week', 'Month'].asMap().entries.map((e) => Expanded(child: GestureDetector(
-        onTap: () => onPeriod(e.key), child: Container(padding: const EdgeInsets.symmetric(vertical: 10), decoration: BoxDecoration(color: period == e.key ? lime : Colors.transparent, borderRadius: BorderRadius.circular(24)), child: Text(e.value, textAlign: TextAlign.center, style: TextStyle(color: period == e.key ? Colors.black : muted, fontWeight: FontWeight.w800, fontSize: 11))),
-      )).toList())),
+      Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(color: card, borderRadius: BorderRadius.circular(30)),
+        child: Row(
+          children: ['Day', 'Week', 'Month'].asMap().entries.map((e) {
+            return Expanded(
+              child: GestureDetector(
+                onTap: () => onPeriod(e.key),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: period == e.key ? lime : Colors.transparent,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Text(
+                    e.value,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: period == e.key ? Colors.black : muted,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 11,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
       const SizedBox(height: 18), Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: card, borderRadius: BorderRadius.circular(24)), child: Column(children: [
         Text(['TODAY', 'THIS WEEK', 'THIS MONTH'][period], style: const TextStyle(color: muted, letterSpacing: 1, fontWeight: FontWeight.w800, fontSize: 10)),
         const SizedBox(height: 17), SizedBox(width: 190, height: 190, child: Stack(alignment: Alignment.center, children: [
